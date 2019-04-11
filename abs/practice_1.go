@@ -3,12 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	var a int
-	fmt.Scan(&a)
-	var b, c int
-	fmt.Scan(&b, &c)
+	var a, b, c int
 	var s string
-	fmt.Scan(&s)
+	fmt.Scan(&a, &b, &c, &s)
 
 	fmt.Println(a+b+c, s)
 }

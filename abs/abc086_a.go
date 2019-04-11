@@ -6,11 +6,9 @@ func main() {
 	var a, b int
 	fmt.Scan(&a, &b)
 
-	var s string
 	if a*b%2 == 0 {
-		s = "Even"
+		fmt.Println("Even")
 	} else {
-		s = "Odd"
+		fmt.Println("Odd")
 	}
-	fmt.Print(s)
 }
