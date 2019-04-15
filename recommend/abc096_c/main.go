@@ -55,17 +55,11 @@ func main() {
 		if !is_complete {
 			break
 		}
-
 		for j := 0; j < w; j++ {
 			if !is_complete {
 				break
 			}
-
-			if drawable(strs, i, j) {
-				is_complete = true
-			} else {
-				is_complete = false
-			}
+			is_complete = drawable(strs, i, j)
 		}
 	}
 
