@@ -37,11 +37,11 @@ func main() {
 	}
 	sort.Sort(cs)
 	var p int
-label:
+lb:
 	for _, v := range cs {
 		for i := 0; i < v.Stock; i++ {
 			if p >= len(as) || v.Number < as[p] {
-				break label
+				break lb
 			}
 			sum += int64(v.Number - as[p])
 			p++
