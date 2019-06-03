@@ -5,17 +5,12 @@ import "fmt"
 func main() {
 	var a, b int
 	fmt.Scan(&a, &b)
-
-	sum := 0
-	for i := 0; i < 2; i++ {
-		if a > b {
-			sum += a
-			a--
-		} else {
-			sum += b
-			b--
-		}
+	if b > a {
+		a, b = b, a
 	}
-
-	fmt.Println(sum)
+	if a == b {
+		fmt.Println(a * 2)
+	} else {
+		fmt.Println(a*2 - 1)
+	}
 }
