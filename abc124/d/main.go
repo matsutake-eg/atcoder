@@ -3,44 +3,39 @@ package main
 import "fmt"
 
 func main() {
-	var n, k int
-	var s string
+	var (
+		n, k int
+		s    string
+	)
 	fmt.Scan(&n, &k, &s)
-
-	ans := 0
-	for l, r := -1, 0; r < len(s); r++ {
-		for r < len(s) && s[r] == '1' {
-			r++
-		}
-		for k > 0 {
-			k--
-			for r < len(s) && s[r] == '0' {
-				if r == len(s) {
-					break
-				}
-				r++
-			}
-			for r < len(s) && s[r] == '1' {
-				if r == len(s) {
-					break
-				}
-				r++
+	var (
+		ans, sum, l int
+		bls, brs    byte = '1', '1'
+	)
+	for r := 0; r < n; r++ {
+		if brs != s[r] {
+			brs = s[r]
+			if s[r] == '0' {
+				k--
 			}
 		}
-		r--
-		if v := r - l; v > ans {
-			ans = v
+		if k < 0 {
+			for l < n {
+				if bls != s[l] {
+					bls = s[l]
+					if s[l] == '1' {
+						k++
+						break
+					}
+				}
+				l++
+				sum--
+			}
 		}
-		k++
-		l++
-		for l < len(s) && s[l] == '1' {
-			l++
+		sum++
+		if sum > ans {
+			ans = sum
 		}
-		for l < len(s) && s[l] == '0' {
-			l++
-		}
-		l--
 	}
-
 	fmt.Println(ans)
 }
