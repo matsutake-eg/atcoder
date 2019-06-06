@@ -3,17 +3,16 @@ package main
 import "fmt"
 
 func main() {
-	var x, p int
-	sum := 0
-	max := 0
-	for i := 0; i < 5; i++ {
-		fmt.Scan(&x)
-		sum += x
-		if v := x % 10; v != 0 {
-			p = 10 - v
-			sum += p
-			if p > max {
-				max = p
+	xs := make([]int, 5)
+	var sum, max int
+	for i := range xs {
+		fmt.Scan(&xs[i])
+		if xs[i]%10 == 0 {
+			sum += xs[i]
+		} else {
+			sum += (xs[i]/10 + 1) * 10
+			if v := 10 - xs[i]%10; v > max {
+				max = v
 			}
 		}
 	}
