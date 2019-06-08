@@ -8,23 +8,23 @@ import (
 )
 
 func main() {
-	var n, q int
-	var s string
+	var (
+		n, q int
+		s    string
+	)
 	fmt.Scan(&n, &q, &s)
-
 	xs := make([]int, n)
-	xs[0] = 0
-	for i := 1; i < n; i++ {
-		if s[i-1] == 'A' && s[i] == 'C' {
-			xs[i] = xs[i-1] + 1
-		} else {
-			xs[i] = xs[i-1]
+	var sum int
+	for i := range s[:len(xs)-1] {
+		if s[i] == 'A' && s[i+1] == 'C' {
+			sum++
 		}
+		xs[i+1] = sum
 	}
 
-	var l, r int
 	sc := bufio.NewScanner(os.Stdin)
 	sc.Split(bufio.ScanWords)
+	var l, r int
 	for i := 0; i < q; i++ {
 		sc.Scan()
 		l, _ = strconv.Atoi(sc.Text())

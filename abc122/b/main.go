@@ -5,21 +5,16 @@ import "fmt"
 func main() {
 	var s string
 	fmt.Scan(&s)
-
-	count := 0
-	max := 0
-	for _, r := range s {
-		if r == 'A' || r == 'C' || r == 'G' || r == 'T' {
-			count++
+	var max, cnt int
+	for _, v := range s {
+		if v == 'A' || v == 'T' || v == 'C' || v == 'G' {
+			cnt++
 		} else {
-			if count > max {
-				max = count
-			}
-			count = 0
+			cnt = 0
 		}
-	}
-	if count > max {
-		max = count
+		if cnt > max {
+			max = cnt
+		}
 	}
 	fmt.Println(max)
 }

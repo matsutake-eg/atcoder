@@ -5,15 +5,15 @@ import "fmt"
 func main() {
 	var b string
 	fmt.Scan(&b)
-
 	switch b {
 	case "A":
-		fmt.Println("T")
-	case "C":
-		fmt.Println("G")
-	case "G":
-		fmt.Println("C")
+		b = "T"
 	case "T":
-		fmt.Println("A")
+		b = "A"
+	case "C":
+		b = "G"
+	case "G":
+		b = "C"
 	}
+	fmt.Println(b)
 }
