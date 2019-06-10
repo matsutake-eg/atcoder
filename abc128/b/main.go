@@ -6,19 +6,19 @@ import (
 )
 
 type Restaurant struct {
-	name  string
-	point int
-	inedx int
+	Name  string
+	Point int
+	Index int
 }
 type Restaurants []Restaurant
 
 func (r Restaurants) Len() int      { return len(r) }
 func (r Restaurants) Swap(i, j int) { r[i], r[j] = r[j], r[i] }
 func (r Restaurants) Less(i, j int) bool {
-	if r[i].name == r[j].name {
-		return r[i].point > r[j].point
+	if r[i].Name == r[j].Name {
+		return r[i].Point > r[j].Point
 	}
-	return r[i].name < r[j].name
+	return r[i].Name < r[j].Name
 }
 
 func main() {
@@ -26,11 +26,12 @@ func main() {
 	fmt.Scan(&n)
 	var rs Restaurants = make([]Restaurant, n)
 	for i := 0; i < n; i++ {
-		fmt.Scan(&rs[i].name, &rs[i].point)
-		rs[i].inedx = i + 1
+		fmt.Scan(&rs[i].Name, &rs[i].Point)
+		rs[i].Index = i + 1
 	}
+
 	sort.Sort(rs)
 	for _, v := range rs {
-		fmt.Println(v.inedx)
+		fmt.Println(v.Index)
 	}
 }

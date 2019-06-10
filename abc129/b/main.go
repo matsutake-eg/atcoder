@@ -12,18 +12,15 @@ func abs(x int) int {
 func main() {
 	var n int
 	fmt.Scan(&n)
-	var (
-		ws   = make([]int, n)
-		rsum int
-	)
+	ws := make([]int, n)
+	rsum := 0
 	for i := range ws {
 		fmt.Scan(&ws[i])
 		rsum += ws[i]
 	}
-	var (
-		lsum int
-		ans  = 100000
-	)
+
+	lsum := 0
+	ans := 100000
 	for _, v := range ws {
 		lsum += v
 		rsum -= v

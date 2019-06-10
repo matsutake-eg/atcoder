@@ -3,10 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	var (
-		xs       = make([]int, 3)
-		max, sum int
-	)
+	xs := make([]int, 3)
+	sum := 0
+	max := 0
 	for i := range xs {
 		fmt.Scan(&xs[i])
 		sum += xs[i]

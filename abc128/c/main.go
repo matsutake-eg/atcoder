@@ -24,7 +24,7 @@ func dfs(cur int, sw int) int {
 		}
 		return 1
 	}
-	var sum int
+	sum := 0
 	sum += dfs(cur+1, 0)
 	sum += dfs(cur+1, 1)
 	return sum
@@ -46,6 +46,7 @@ func main() {
 	for i := range p {
 		fmt.Scan(&p[i])
 	}
+
 	xs = make([]int, n)
 	fmt.Println(dfs(0, 0))
 }
