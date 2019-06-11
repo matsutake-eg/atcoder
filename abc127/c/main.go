@@ -12,19 +12,17 @@ func main() {
 	fmt.Scan(&n, &m)
 	sc := bufio.NewScanner(os.Stdin)
 	sc.Split(bufio.ScanWords)
-	var (
-		l, r int
-		lMax = 0
-		rMin = 100001
-	)
+
+	lMax := 0
+	rMin := 100001
 	for i := 0; i < m; i++ {
 		sc.Scan()
-		l, _ = strconv.Atoi(sc.Text())
+		l, _ := strconv.Atoi(sc.Text())
 		if l > lMax {
 			lMax = l
 		}
 		sc.Scan()
-		r, _ = strconv.Atoi(sc.Text())
+		r, _ := strconv.Atoi(sc.Text())
 		if r < rMin {
 			rMin = r
 		}

@@ -21,13 +21,14 @@ func main() {
 	sc := bufio.NewScanner(os.Stdin)
 	sc.Split(bufio.ScanWords)
 	as := make([]int, n)
-	var sum int64
+	var sum int64 = 0
 	for i := range as {
 		sc.Scan()
 		as[i], _ = strconv.Atoi(sc.Text())
 		sum += int64(as[i])
 	}
 	sort.Ints(as)
+
 	var cs Cards = make([]Card, m)
 	for i := range cs {
 		sc.Scan()
@@ -36,6 +37,7 @@ func main() {
 		cs[i].Number, _ = strconv.Atoi(sc.Text())
 	}
 	sort.Sort(cs)
+
 	var p int
 lb:
 	for _, v := range cs {
