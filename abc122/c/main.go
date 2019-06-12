@@ -13,8 +13,9 @@ func main() {
 		s    string
 	)
 	fmt.Scan(&n, &q, &s)
+
 	xs := make([]int, n)
-	var sum int
+	sum := 0
 	for i := range s[:len(xs)-1] {
 		if s[i] == 'A' && s[i+1] == 'C' {
 			sum++

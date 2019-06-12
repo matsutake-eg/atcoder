@@ -8,10 +8,11 @@ func main() {
 		s    string
 	)
 	fmt.Scan(&n, &k, &s)
-	var (
-		ans, sum, l int
-		bls, brs    byte = '1', '1'
-	)
+
+	l := 0
+	sum := 0
+	var bls, brs byte = '1', '1'
+	ans := 0
 	for r := 0; r < n; r++ {
 		if brs != s[r] {
 			brs = s[r]

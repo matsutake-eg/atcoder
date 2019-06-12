@@ -5,7 +5,9 @@ import "fmt"
 func main() {
 	var s string
 	fmt.Scan(&s)
-	var sumOdd, sumEven int
+
+	sumOdd := 0
+	sumEven := 0
 	for i, v := range s {
 		if i%2 == 0 {
 			if v != '0' {

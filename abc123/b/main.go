@@ -4,7 +4,9 @@ import "fmt"
 
 func main() {
 	xs := make([]int, 5)
-	var sum, max int
+
+	sum := 0
+	max := 0
 	for i := range xs {
 		fmt.Scan(&xs[i])
 		if xs[i]%10 == 0 {
