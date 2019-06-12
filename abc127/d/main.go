@@ -21,7 +21,7 @@ func main() {
 	sc := bufio.NewScanner(os.Stdin)
 	sc.Split(bufio.ScanWords)
 	as := make([]int, n)
-	var sum int64 = 0
+	sum := int64(0)
 	for i := range as {
 		sc.Scan()
 		as[i], _ = strconv.Atoi(sc.Text())

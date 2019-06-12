@@ -12,11 +12,10 @@ func main() {
 	fmt.Scan(&n)
 	sc := bufio.NewScanner(os.Stdin)
 	sc.Split(bufio.ScanWords)
-	var (
-		sum       int64
-		min       = 10000000001
-		isNegaOdd bool
-	)
+
+	sum := int64(0)
+	min := 10000000001
+	isNegaOdd := false
 	for i := 0; i < n; i++ {
 		sc.Scan()
 		a, _ := strconv.Atoi(sc.Text())

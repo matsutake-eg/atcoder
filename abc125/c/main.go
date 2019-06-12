@@ -21,8 +21,7 @@ func gcd(a, b int) int {
 		if r == 0 {
 			return b
 		}
-		a = b
-		b = r
+		a, b = b, r
 	}
 }
 

@@ -8,10 +8,8 @@ import (
 func main() {
 	var n, k int
 	fmt.Scan(&n, &k)
-	var (
-		sum   float64
-		limit = n
-	)
+	sum := 0.0
+	limit := n
 	if n > k {
 		limit = k
 		sum += float64(n - k)

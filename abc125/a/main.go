@@ -3,8 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	var a, t float32
-	var b int
+	var (
+		a, t float32
+		b    int
+	)
 	fmt.Scan(&a, &b, &t)
 
 	sum := 0
