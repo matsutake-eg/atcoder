@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
 type Point struct{ X, Y int }
+type Key struct{ Dx, Dy int }
 
 func main() {
 	var n int
@@ -21,15 +21,15 @@ func main() {
 		fmt.Scan(&ps[i].X, &ps[i].Y)
 	}
 
-	xm := make(map[string]int)
+	xm := make(map[Key]int)
 	for _, v1 := range ps {
 		for _, v2 := range ps {
-			dx := strconv.Itoa(v1.X - v2.X)
-			dy := strconv.Itoa(v1.Y - v2.Y)
-			xm[dx+"_"+dy]++
+			if v1 == v2 {
+				continue
+			}
+			xm[Key{v1.X - v2.X, v1.Y - v2.Y}]++
 		}
 	}
-	xm["0_0"] = 1
 
 	max := 0
 	for _, v := range xm {
