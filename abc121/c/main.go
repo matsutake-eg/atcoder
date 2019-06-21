@@ -9,8 +9,8 @@ import (
 )
 
 type shop struct {
-	PRICE int
-	STOCK int
+	price int
+	stock int
 }
 
 type shops []shop
@@ -24,7 +24,7 @@ func (s shops) Swap(i, j int) {
 }
 
 func (s shops) Less(i, j int) bool {
-	return s[i].PRICE < s[j].PRICE
+	return s[i].price < s[j].price
 }
 
 func main() {
@@ -35,21 +35,21 @@ func main() {
 	var s shops = make([]shop, n)
 	for i := 0; i < n; i++ {
 		sc.Scan()
-		s[i].PRICE, _ = strconv.Atoi(sc.Text())
+		s[i].price, _ = strconv.Atoi(sc.Text())
 		sc.Scan()
-		s[i].STOCK, _ = strconv.Atoi(sc.Text())
+		s[i].stock, _ = strconv.Atoi(sc.Text())
 	}
 	sort.Sort(s)
 
 	count := 0
 	sum := 0
 	for i := 0; i < n; i++ {
-		if v := count + s[i].STOCK; v >= m {
-			sum += s[i].PRICE * (m - count)
+		if v := count + s[i].stock; v >= m {
+			sum += s[i].price * (m - count)
 			break
 		} else {
 			count = v
-			sum += s[i].PRICE * s[i].STOCK
+			sum += s[i].price * s[i].stock
 		}
 	}
 	fmt.Println(sum)

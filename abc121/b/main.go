@@ -5,14 +5,15 @@ import "fmt"
 func main() {
 	var n, m, c int
 	fmt.Scan(&n, &m, &c)
+
 	bs := make([]int, m)
-	for i := 0; i < m; i++ {
+	for i := range bs {
 		fmt.Scan(&bs[i])
 	}
 
 	count := 0
-	var x int
 	for i := 0; i < n; i++ {
+		var x int
 		sum := c
 		for j := 0; j < m; j++ {
 			fmt.Scan(&x)
