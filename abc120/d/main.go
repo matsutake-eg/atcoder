@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	uft      []int
-	children map[int]int64
+	uft []int
+	ch  map[int]int64
 )
 
 func find(x int) int {
@@ -23,7 +23,7 @@ func find(x int) int {
 
 func union(a, b int) {
 	uft[a] = uft[b]
-	children[b] += children[a]
+	ch[b] += ch[a]
 }
 
 func main() {
@@ -42,10 +42,10 @@ func main() {
 	}
 
 	uft = make([]int, n+1)
-	children = make(map[int]int64)
+	ch = make(map[int]int64)
 	for i := range uft {
 		uft[i] = i
-		children[i]++
+		ch[i]++
 	}
 
 	ans := make([]int64, m)
@@ -55,7 +55,7 @@ func main() {
 		br := find(bs[i])
 
 		if ar != br {
-			ans[i-1] = ans[i] - children[ar]*children[br]
+			ans[i-1] = ans[i] - ch[ar]*ch[br]
 			union(ar, br)
 			continue
 		}
