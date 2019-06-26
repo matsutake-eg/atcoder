@@ -7,7 +7,10 @@ import (
 	"strconv"
 )
 
-var uft []int
+var (
+	uft  []int
+	rank []int
+)
 
 func find(x int) int {
 	if uft[x] == x {
@@ -23,7 +26,14 @@ func union(a, b int) {
 	if ar == br {
 		return
 	}
-	uft[ar] = br
+
+	if rank[ar] < rank[br] {
+		uft[ar] = br
+		return
+	} else if rank[ar] == rank[br] {
+		rank[ar]++
+	}
+	uft[br] = ar
 }
 
 func main() {
@@ -42,6 +52,7 @@ func main() {
 	}
 
 	uft = make([]int, n+1)
+	rank = make([]int, n+1)
 	for i := range uft {
 		uft[i] = i
 	}
