@@ -30,7 +30,7 @@ func union(a, b, i int) {
 	}
 
 	ans[i-1] -= int64(ch[ar] * ch[br])
-	uft[ar] = uft[br]
+	uft[ar] = br
 	ch[br] += ch[ar]
 }
 
@@ -53,7 +53,7 @@ func main() {
 	ch = make([]int, n+1)
 	for i := range uft {
 		uft[i] = i
-		ch[i]++
+		ch[i] = 1
 	}
 
 	ans = make([]int64, m)
