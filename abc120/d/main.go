@@ -8,9 +8,10 @@ import (
 )
 
 var (
-	uft []int
-	ch  []int
-	ans []int64
+	uft  []int
+	rank []int
+	ch   []int
+	ans  []int64
 )
 
 func find(x int) int {
@@ -30,8 +31,16 @@ func union(a, b, i int) {
 	}
 
 	ans[i-1] -= int64(ch[ar] * ch[br])
-	uft[ar] = br
-	ch[br] += ch[ar]
+
+	if rank[ar] < rank[br] {
+		uft[ar] = br
+		ch[br] += ch[ar]
+		return
+	} else if rank[ar] == rank[br] {
+		rank[ar]++
+	}
+	uft[br] = ar
+	ch[ar] += ch[br]
 }
 
 func main() {
@@ -50,6 +59,7 @@ func main() {
 	}
 
 	uft = make([]int, n+1)
+	rank = make([]int, n+1)
 	ch = make([]int, n+1)
 	for i := range uft {
 		uft[i] = i
