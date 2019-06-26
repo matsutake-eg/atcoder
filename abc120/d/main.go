@@ -9,7 +9,8 @@ import (
 
 var (
 	uft []int
-	ch  map[int]int64
+	ch  []int
+	ans []int64
 )
 
 func find(x int) int {
@@ -21,9 +22,16 @@ func find(x int) int {
 	return uft[x]
 }
 
-func union(a, b int) {
-	uft[a] = uft[b]
-	ch[b] += ch[a]
+func union(a, b, i int) {
+	ans[i-1] = ans[i]
+	ar, br := find(a), find(b)
+	if ar == br {
+		return
+	}
+
+	ans[i-1] -= int64(ch[ar] * ch[br])
+	uft[ar] = uft[br]
+	ch[br] += ch[ar]
 }
 
 func main() {
@@ -42,24 +50,16 @@ func main() {
 	}
 
 	uft = make([]int, n+1)
-	ch = make(map[int]int64)
+	ch = make([]int, n+1)
 	for i := range uft {
 		uft[i] = i
 		ch[i]++
 	}
 
-	ans := make([]int64, m)
+	ans = make([]int64, m)
 	ans[m-1] = int64(n * (n - 1) / 2)
 	for i := m - 1; i >= 1; i-- {
-		ar := find(as[i])
-		br := find(bs[i])
-
-		if ar != br {
-			ans[i-1] = ans[i] - ch[ar]*ch[br]
-			union(ar, br)
-			continue
-		}
-		ans[i-1] = ans[i]
+		union(as[i], bs[i], i)
 	}
 
 	for _, v := range ans {
