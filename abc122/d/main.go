@@ -31,9 +31,8 @@ func dfs(cnt int, last3 string) int {
 }
 
 func isNotAGC(last4 string) bool {
-	s := make([]rune, 4)
 	for i := range last4 {
-		copy(s, []rune(last4))
+		s := []rune(last4)
 		if i < 3 {
 			s[i], s[i+1] = s[i+1], s[i]
 		}
