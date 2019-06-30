@@ -2,4 +2,4 @@ AtCoder（オンラインで参加できるプログラミングコンテスト�
 
 https://atcoder.jp/
 
-Goと時々Python3で解きます
+しばらくはGoで解きます
