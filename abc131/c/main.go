@@ -2,21 +2,23 @@ package main
 
 import "fmt"
 
-func gcd(a, b int64) int64 {
-	r := a % b
-	if r == 0 {
-		return b
+func lcm(x, y int) int {
+	gcd := func(x, y int) int {
+		for y != 0 {
+			x, y = y, x%y
+		}
+		return x
 	}
-	return gcd(b, r)
+	return x * y / gcd(x, y)
 }
 
 func main() {
-	var a, b, c, d int64
+	var a, b, c, d int
 	fmt.Scan(&a, &b, &c, &d)
 
 	dC := b/c - (a-1)/c
 	dD := b/d - (a-1)/d
-	l := c * d / gcd(c, d)
+	l := lcm(c, d)
 	dCandD := b/l - (a-1)/l
 
 	fmt.Println(b - a + 1 - (dC + dD - dCandD))
