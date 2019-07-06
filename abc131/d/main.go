@@ -11,14 +11,9 @@ import (
 type work struct{ time, limit int }
 type works []work
 
-func (w works) Len() int      { return len(w) }
-func (w works) Swap(i, j int) { w[i], w[j] = w[j], w[i] }
-func (w works) Less(i, j int) bool {
-	if w[i].limit == w[j].limit {
-		return w[i].time < w[j].time
-	}
-	return w[i].limit < w[j].limit
-}
+func (w works) Len() int           { return len(w) }
+func (w works) Swap(i, j int)      { w[i], w[j] = w[j], w[i] }
+func (w works) Less(i, j int) bool { return w[i].limit < w[j].limit }
 
 func main() {
 	var n int
@@ -26,7 +21,7 @@ func main() {
 
 	sc := bufio.NewScanner(os.Stdin)
 	sc.Split(bufio.ScanWords)
-	var ws works = make([]work, n)
+	ws := works(make([]work, n))
 	for i := range ws {
 		sc.Scan()
 		ws[i].time, _ = strconv.Atoi(sc.Text())
@@ -35,10 +30,10 @@ func main() {
 	}
 
 	sort.Sort(ws)
-	sum := int64(0)
+	sum := 0
 	for _, w := range ws {
-		sum += int64(w.time)
-		if sum > int64(w.limit) {
+		sum += w.time
+		if sum > w.limit {
 			fmt.Println("No")
 			return
 		}

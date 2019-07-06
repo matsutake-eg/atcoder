@@ -7,12 +7,7 @@ import (
 	"strconv"
 )
 
-var (
-	uft  []int
-	rank []int
-	ch   []int
-	ans  []int64
-)
+var uft, rank, ch, ans []int
 
 func find(x int) int {
 	if uft[x] == x {
@@ -30,7 +25,7 @@ func union(a, b, i int) {
 		return
 	}
 
-	ans[i-1] -= int64(ch[ar] * ch[br])
+	ans[i-1] -= ch[ar] * ch[br]
 
 	if rank[ar] < rank[br] {
 		uft[ar] = br
@@ -66,8 +61,8 @@ func main() {
 		ch[i] = 1
 	}
 
-	ans = make([]int64, m)
-	ans[m-1] = int64(n * (n - 1) / 2)
+	ans = make([]int, m)
+	ans[m-1] = n * (n - 1) / 2
 	for i := m - 1; i >= 1; i-- {
 		union(as[i], bs[i], i)
 	}

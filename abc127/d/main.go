@@ -8,12 +8,12 @@ import (
 	"strconv"
 )
 
-type Card struct{ Number, Stock int }
-type Cards []Card
+type card struct{ number, stock int }
+type cards []card
 
-func (c Cards) Len() int           { return len(c) }
-func (c Cards) Swap(i, j int)      { c[i], c[j] = c[j], c[i] }
-func (c Cards) Less(i, j int) bool { return c[i].Number > c[j].Number }
+func (c cards) Len() int           { return len(c) }
+func (c cards) Swap(i, j int)      { c[i], c[j] = c[j], c[i] }
+func (c cards) Less(i, j int) bool { return c[i].number > c[j].number }
 
 func main() {
 	var n, m int
@@ -21,31 +21,31 @@ func main() {
 	sc := bufio.NewScanner(os.Stdin)
 	sc.Split(bufio.ScanWords)
 	as := make([]int, n)
-	sum := int64(0)
+	sum := 0
 	for i := range as {
 		sc.Scan()
 		as[i], _ = strconv.Atoi(sc.Text())
-		sum += int64(as[i])
+		sum += as[i]
 	}
 	sort.Ints(as)
 
-	var cs Cards = make([]Card, m)
+	cs := cards(make([]card, m))
 	for i := range cs {
 		sc.Scan()
-		cs[i].Stock, _ = strconv.Atoi(sc.Text())
+		cs[i].stock, _ = strconv.Atoi(sc.Text())
 		sc.Scan()
-		cs[i].Number, _ = strconv.Atoi(sc.Text())
+		cs[i].number, _ = strconv.Atoi(sc.Text())
 	}
 	sort.Sort(cs)
 
 	var p int
 lb:
 	for _, v := range cs {
-		for i := 0; i < v.Stock; i++ {
-			if p >= len(as) || v.Number < as[p] {
+		for i := 0; i < v.stock; i++ {
+			if p >= len(as) || v.number < as[p] {
 				break lb
 			}
-			sum += int64(v.Number - as[p])
+			sum += v.number - as[p]
 			p++
 		}
 	}

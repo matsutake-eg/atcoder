@@ -13,7 +13,7 @@ func main() {
 	sc := bufio.NewScanner(os.Stdin)
 	sc.Split(bufio.ScanWords)
 
-	sum := int64(0)
+	sum := 0
 	min := 10000000001
 	isNegaOdd := false
 	for i := 0; i < n; i++ {
@@ -23,13 +23,13 @@ func main() {
 			isNegaOdd = !isNegaOdd
 			a = -a
 		}
-		sum += int64(a)
+		sum += a
 		if a < min {
 			min = a
 		}
 	}
 	if isNegaOdd {
-		sum -= int64(min * 2)
+		sum -= min * 2
 	}
 	fmt.Println(sum)
 }

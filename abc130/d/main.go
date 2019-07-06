@@ -8,10 +8,7 @@ import (
 )
 
 func main() {
-	var (
-		n int
-		k int64
-	)
+	var n, k int
 	fmt.Scan(&n, &k)
 
 	sc := bufio.NewScanner(os.Stdin)
@@ -22,20 +19,20 @@ func main() {
 		as[i], _ = strconv.Atoi(sc.Text())
 	}
 
-	sum := int64(0)
-	cnt := int64(0)
+	sum := 0
+	cnt := 0
 	l := -1
 	for i := range as {
-		sum += int64(as[i])
+		sum += as[i]
 		if sum >= k {
-			cnt += int64(len(as) - i)
+			cnt += len(as) - i
 			for l <= i {
 				l++
-				sum -= int64(as[l])
+				sum -= as[l]
 				if sum < k {
 					break
 				}
-				cnt += int64(len(as) - i)
+				cnt += len(as) - i
 			}
 		}
 	}

@@ -15,5 +15,5 @@ func main() {
 			min = xs[i]
 		}
 	}
-	fmt.Println(int64(math.Ceil(float64(n)/float64(min))) + 4)
+	fmt.Println(int(math.Ceil(float64(n)/float64(min))) + 4)
 }

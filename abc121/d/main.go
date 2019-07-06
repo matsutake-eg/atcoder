@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func xor(x int64) (ans int64) {
+func xor(x int) (ans int) {
 	switch x % 4 {
 	case 0:
 		ans = x
@@ -17,7 +17,7 @@ func xor(x int64) (ans int64) {
 }
 
 func main() {
-	var a, b int64
+	var a, b int
 	fmt.Scan(&a, &b)
 
 	fmt.Println(xor(a-1) ^ xor(b))
