@@ -67,7 +67,9 @@ func main() {
 		union(as[i], bs[i], i)
 	}
 
+	wr := bufio.NewWriter(os.Stdout)
 	for _, v := range ans {
-		fmt.Println(v)
+		wr.WriteString(strconv.Itoa(v) + "\n")
 	}
+	wr.Flush()
 }

@@ -40,6 +40,7 @@ func main() {
 		x[i], _ = strconv.Atoi(sc.Text())
 	}
 
+	wr := bufio.NewWriter(os.Stdout)
 	for _, vx := range x {
 		ss := sort.SearchInts(s, vx)
 		st := sort.SearchInts(t, vx)
@@ -54,6 +55,7 @@ func main() {
 				}
 			}
 		}
-		fmt.Println(ans)
+		wr.WriteString(strconv.Itoa(ans) + "\n")
 	}
+	wr.Flush()
 }

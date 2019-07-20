@@ -24,9 +24,12 @@ func main() {
 		x -= 2 * a[i-1]
 	}
 	fmt.Print(x)
+
+	wr := bufio.NewWriter(os.Stdout)
 	for i := 0; i < n-1; i++ {
 		x = a[i]*2 - x
-		fmt.Printf(" %v", x)
+		wr.WriteString(" " + strconv.Itoa(x))
 	}
-	fmt.Println()
+	wr.WriteString("\n")
+	wr.Flush()
 }

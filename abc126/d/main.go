@@ -47,7 +47,9 @@ func main() {
 	colors = make([]int, n)
 	dfs(1, 0)
 
+	wr := bufio.NewWriter(os.Stdout)
 	for _, v := range colors {
-		fmt.Println(v - 2)
+		wr.WriteString(strconv.Itoa(v-2) + "\n")
 	}
+	wr.Flush()
 }

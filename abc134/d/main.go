@@ -36,11 +36,14 @@ func main() {
 	}
 
 	fmt.Println(len(ans))
+
+	wr := bufio.NewWriter(os.Stdout)
 	for i, v := range ans {
 		if i == len(ans)-1 {
-			fmt.Println(v)
+			wr.WriteString(strconv.Itoa(v) + "\n")
 			continue
 		}
-		fmt.Printf("%d ", v)
+		wr.WriteString(strconv.Itoa(v) + " ")
 	}
+	wr.Flush()
 }

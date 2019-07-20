@@ -26,11 +26,13 @@ func main() {
 		}
 	}
 
+	wr := bufio.NewWriter(os.Stdout)
 	for _, v := range a {
 		if v == max1 {
-			fmt.Println(max2)
-			continue
+			wr.WriteString(strconv.Itoa(max2) + "\n")
+		} else {
+			wr.WriteString(strconv.Itoa(max1) + "\n")
 		}
-		fmt.Println(max1)
 	}
+	wr.Flush()
 }
