@@ -18,6 +18,10 @@ func push(x int) {
 }
 
 func pop() int {
+	if len(pq) == 0 {
+		return 0
+	}
+
 	ans := pq[0]
 	pq = pq[1:]
 	return ans
