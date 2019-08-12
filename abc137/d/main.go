@@ -2,32 +2,24 @@ package main
 
 import (
 	"bufio"
+	"container/heap"
 	"fmt"
 	"os"
-	"sort"
 	"strconv"
 )
 
-var pq []int
+type priorityQueue []int
 
-func push(x int) {
-	p := sort.Search(len(pq), func(i int) bool { return pq[i] <= x })
-	if p == len(pq) {
-		pq = append(pq, x)
-		return
-	}
-	pq = append(pq[:p+1], pq[p:]...)
-	pq[p] = x
-}
-
-func pop() int {
-	if len(pq) == 0 {
-		return 0
-	}
-
-	ans := pq[0]
-	pq = pq[1:]
-	return ans
+func (p priorityQueue) Len() int            { return len(p) }
+func (p priorityQueue) Less(i, j int) bool  { return p[i] > p[j] }
+func (p priorityQueue) Swap(i, j int)       { p[i], p[j] = p[j], p[i] }
+func (p *priorityQueue) Push(x interface{}) { *p = append(*p, x.(int)) }
+func (p *priorityQueue) Pop() interface{} {
+	old := *p
+	n := len(old)
+	x := old[n-1]
+	*p = old[0 : n-1]
+	return x
 }
 
 func main() {
@@ -45,15 +37,18 @@ func main() {
 		ts[a] = append(ts[a], b)
 	}
 
-	pq = make([]int, 0, n)
+	pq := make(priorityQueue, n)
+	heap.Init(&pq)
 	ans := 0
 	for i := 1; i <= m; i++ {
 		if _, ok := ts[i]; ok {
 			for _, v := range ts[i] {
-				push(v)
+				heap.Push(&pq, v)
 			}
 		}
-		ans += pop()
+		if len(pq) > 0 {
+			ans += heap.Pop(&pq).(int)
+		}
 	}
 	fmt.Println(ans)
 }
