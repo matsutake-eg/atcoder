@@ -1,43 +1,34 @@
 package main
 
 import (
+	"container/heap"
 	"fmt"
-	"sort"
 )
 
-var pq []int
+type data struct{ a, b, c int }
+type priorityQueue []*data
 
-func push(x int) {
-	p := sort.Search(len(pq), func(i int) bool { return pq[i] <= x })
-	if p == len(pq) {
-		pq = append(pq, x)
-		return
-	}
-	pq = append(pq[:p+1], pq[p:]...)
-	pq[p] = x
-}
-
-func pop() int {
-	if len(pq) == 0 {
-		return 0
-	}
-	ans := pq[0]
-	pq = pq[1:]
-	return ans
+func (p priorityQueue) Len() int            { return len(p) }
+func (p priorityQueue) Less(i, j int) bool  { return p[i].a > p[j].a }
+func (p priorityQueue) Swap(i, j int)       { p[i], p[j] = p[j], p[i] }
+func (p *priorityQueue) Push(x interface{}) { *p = append(*p, x.(*data)) }
+func (p *priorityQueue) Pop() interface{} {
+	old := *p
+	n := len(old)
+	x := old[n-1]
+	*p = old[0 : n-1]
+	return x
 }
 
 func main() {
-	pq = make([]int, 0, 5)
-	push(1)
-	fmt.Println(pq)
-	push(3)
-	fmt.Println(pq)
-	push(2)
-	fmt.Println(pq)
-	push(1)
-	fmt.Println(pq)
-	fmt.Println(pop())
-	fmt.Println(pq)
-	fmt.Println(pop())
-	fmt.Println(pq)
+	pq := make(priorityQueue, 0, 10)
+	heap.Push(&pq, &data{1, 2, 3})
+	heap.Push(&pq, &data{2, 3, 4})
+	heap.Push(&pq, &data{1, 3, 4})
+	heap.Push(&pq, &data{3, 3, 4})
+	heap.Push(&pq, &data{5, 3, 4})
+	for len(pq) > 0 {
+		x := heap.Pop(&pq).(*data)
+		fmt.Println(x.a, x.b, x.c)
+	}
 }
