@@ -37,7 +37,7 @@ func main() {
 		ts[a] = append(ts[a], b)
 	}
 
-	pq := make(priorityQueue, n)
+	pq := make(priorityQueue, 0, n)
 	heap.Init(&pq)
 	ans := 0
 	for i := 1; i <= m; i++ {
