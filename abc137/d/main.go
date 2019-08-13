@@ -41,10 +41,8 @@ func main() {
 	heap.Init(&pq)
 	ans := 0
 	for i := 1; i <= m; i++ {
-		if _, ok := ts[i]; ok {
-			for _, v := range ts[i] {
-				heap.Push(&pq, v)
-			}
+		for _, v := range ts[i] {
+			heap.Push(&pq, v)
 		}
 		if len(pq) > 0 {
 			ans += heap.Pop(&pq).(int)
