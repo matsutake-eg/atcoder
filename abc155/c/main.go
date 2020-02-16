@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"container/heap"
 	"os"
 	"sort"
 	"strconv"
@@ -24,22 +23,11 @@ type poll struct {
 	s string
 	c int
 }
-type prQue []*poll
+type polls []poll
 
-func (p prQue) Len() int            { return len(p) }
-func (p prQue) Less(i, j int) bool  { return p[i].c > p[j].c }
-func (p prQue) Swap(i, j int)       { p[i], p[j] = p[j], p[i] }
-func (p *prQue) Push(x interface{}) { *p = append(*p, x.(*poll)) }
-func (p *prQue) Pop() interface{} {
-	old := *p
-	n := len(old)
-	x := old[n-1]
-	*p = old[0 : n-1]
-	return x
-}
-func init() {
-	sc.Split(bufio.ScanWords)
-}
+func (p polls) Len() int           { return len(p) }
+func (p polls) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (p polls) Less(i, j int) bool { return p[i].c > p[j].c }
 
 func main() {
 	n := readInt()
@@ -49,21 +37,20 @@ func main() {
 		m[s]++
 	}
 
-	pq := make(prQue, 0, len(m))
+	ps := polls(make([]poll, 0, len(m)))
 	for s, c := range m {
-		heap.Push(&pq, &poll{s, c})
+		ps = append(ps, poll{s, c})
 	}
+	sort.Sort(ps)
 
 	ans := make([]string, 0, len(m))
-	pm := heap.Pop(&pq).(*poll)
-	ans = append(ans, pm.s)
-	for len(pq) > 0 {
-		p := heap.Pop(&pq).(*poll)
-		if p.c == pm.c {
-			ans = append(ans, p.s)
-		} else {
+	pmx := ps[0]
+	ans = append(ans, pmx.s)
+	for _, p := range ps[1:] {
+		if p.c != pmx.c {
 			break
 		}
+		ans = append(ans, p.s)
 	}
 	sort.Strings(ans)
 
