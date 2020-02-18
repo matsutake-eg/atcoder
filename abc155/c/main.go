@@ -31,7 +31,7 @@ func (p polls) Less(i, j int) bool { return p[i].c > p[j].c }
 
 func main() {
 	n := readInt()
-	m := make(map[string]int)
+	m := make(map[string]int, n)
 	for i := 0; i < n; i++ {
 		s := readStr()
 		m[s]++
