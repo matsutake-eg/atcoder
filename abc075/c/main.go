@@ -16,17 +16,17 @@ func readInt() int {
 }
 
 var n int
-var G map[int][]int
+var G map[int]map[int]bool
 
 func initGraph() {
-	G = make(map[int][]int, n)
+	G = make(map[int]map[int]bool, n)
 }
 
-func add(x, y int) {
-	if _, ok := G[x]; !ok {
-		G[x] = make([]int, 0, n)
+func add(from, to int) {
+	if _, ok := G[from]; !ok {
+		G[from] = make(map[int]bool)
 	}
-	G[x] = append(G[x], y)
+	G[from][to] = true
 }
 
 var seen map[int]bool
@@ -34,14 +34,14 @@ var ba, bb int
 
 func dfs(v int) {
 	seen[v] = true
-	for _, nv := range G[v] {
-		if seen[nv] {
+	for t := range G[v] {
+		if seen[t] {
 			continue
 		}
-		if (v == ba && nv == bb) || (v == bb && nv == ba) {
+		if (v == ba && t == bb) || (v == bb && t == ba) {
 			continue
 		}
-		dfs(nv)
+		dfs(t)
 	}
 }
 
