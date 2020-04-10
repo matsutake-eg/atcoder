@@ -2,72 +2,79 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os"
 	"strconv"
 )
 
-func main() {
-	var n, q int
-	fmt.Scan(&n, &q)
+var sc = bufio.NewScanner(os.Stdin)
 
-	sc := bufio.NewScanner(os.Stdin)
+func scanInt() int {
+	sc.Scan()
+	iv, _ := strconv.Atoi(sc.Text())
+	return iv
+}
+
+func init() {
 	sc.Split(bufio.ScanWords)
+}
 
-	eg := make(map[int]map[int]bool)
-	for i := 0; i < n-1; i++ {
-		sc.Scan()
-		a, _ := strconv.Atoi(sc.Text())
-		sc.Scan()
-		b, _ := strconv.Atoi(sc.Text())
-		if _, ok := eg[a]; !ok {
-			eg[a] = make(map[int]bool)
-		}
-		eg[a][b] = true
-		if _, ok := eg[b]; !ok {
-			eg[b] = make(map[int]bool)
-		}
-		eg[b][a] = true
+var graph map[int]map[int]bool
+
+func initGraph(x int) {
+	graph = make(map[int]map[int]bool, x)
+}
+
+func add(from, to int) {
+	if _, ok := graph[from]; !ok {
+		graph[from] = make(map[int]bool)
 	}
+	graph[from][to] = true
+}
 
-	ans := make([]int, n+1)
-	for i := 0; i < q; i++ {
-		sc.Scan()
-		p, _ := strconv.Atoi(sc.Text())
-		sc.Scan()
-		x, _ := strconv.Atoi(sc.Text())
-		ans[p] += x
-	}
+var (
+	cnt []int
+	ans []int
+)
 
-	qu := make([]int, 1, n)
-	qu[0] = 1
-	wk := make([]bool, n+1)
-	wk[1] = true
-	for {
-		p := qu[0]
-		for v := range eg[p] {
-			if wk[v] {
-				continue
-			}
-			wk[v] = true
-			qu = append(qu, v)
-			ans[v] += ans[p]
-		}
-		if len(qu) > 1 {
-			qu = qu[1:]
+func dfs(v, pv int) {
+	ans[v] = ans[pv] + cnt[v]
+	for t := range graph[v] {
+		if ans[t] >= 0 {
 			continue
 		}
-		break
+		dfs(t, v)
+	}
+}
+
+func main() {
+	n, q := scanInt(), scanInt()
+	initGraph(n)
+	for i := 0; i < n-1; i++ {
+		a, b := scanInt(), scanInt()
+		add(a, b)
+		add(b, a)
 	}
 
-	wr := bufio.NewWriter(os.Stdout)
+	cnt = make([]int, n+1)
+	for i := 0; i < q; i++ {
+		p, x := scanInt(), scanInt()
+		cnt[p] += x
+	}
+
+	ans = make([]int, n+1)
+	for i := 1; i <= n; i++ {
+		ans[i] = -1
+	}
+
+	dfs(1, 0)
+	var wr = bufio.NewWriter(os.Stdout)
 	for i := 1; i <= n; i++ {
 		wr.WriteString(strconv.Itoa(ans[i]))
-		if i != n {
+		if i < n {
 			wr.WriteString(" ")
-			continue
+		} else {
+			wr.WriteString("\n")
 		}
-		wr.WriteString("\n")
 	}
 	wr.Flush()
 }
