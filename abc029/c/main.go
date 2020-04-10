@@ -6,17 +6,15 @@ import (
 	"os"
 )
 
-var az string = "abc"
 var wr = bufio.NewWriter(os.Stdout)
 
-func rec(x int, s string) {
-	if x == 0 {
+func dfs(i int, s string) {
+	if i == 0 {
 		wr.WriteString(s + "\n")
 		return
 	}
-
-	for _, r := range az {
-		rec(x-1, s+string(r))
+	for _, r := range "abc" {
+		dfs(i-1, s+string(r))
 	}
 }
 
@@ -24,6 +22,6 @@ func main() {
 	var n int
 	fmt.Scan(&n)
 
-	rec(n, "")
+	dfs(n, "")
 	wr.Flush()
 }

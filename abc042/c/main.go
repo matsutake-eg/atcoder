@@ -30,7 +30,7 @@ func min(x, y int) int {
 var n int
 var nums []string
 
-func rec(s string) int {
+func dfs(s string) int {
 	if len(s) > len(strconv.Itoa(n))+1 {
 		return math.MaxInt64
 	}
@@ -41,7 +41,7 @@ func rec(s string) int {
 
 	ans := math.MaxInt64
 	for _, v := range nums {
-		ans = min(ans, rec(s+v))
+		ans = min(ans, dfs(s+v))
 	}
 	return ans
 }
@@ -61,5 +61,5 @@ func main() {
 			nums = append(nums, strconv.Itoa(i))
 		}
 	}
-	fmt.Println(rec(""))
+	fmt.Println(dfs(""))
 }
