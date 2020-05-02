@@ -15,6 +15,6 @@ func main() {
 			fmt.Println(i)
 			return
 		}
-		m = int(math.Trunc(float64(m) * 1.01))
+		m = int(math.Floor(float64(m) * 1.01))
 	}
 }
