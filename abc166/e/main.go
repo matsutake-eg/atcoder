@@ -22,28 +22,20 @@ func init() {
 func main() {
 	n := scanInt()
 
-	xm := make(map[int]map[int]bool, n)
-	ym := make(map[int]map[int]bool, n)
+	xm := make(map[int]int, n)
+	ym := make(map[int]int, n)
 	for i := 1; i <= n; i++ {
 		a := scanInt()
 		if x := i - a; x > 0 {
-			if _, ok := xm[x]; !ok {
-				xm[x] = make(map[int]bool)
-			}
-			xm[x][i] = true
+			xm[x]++
 		}
 		y := i + a
-		if _, ok := ym[y]; !ok {
-			ym[y] = make(map[int]bool)
-		}
-		ym[y][i] = true
+		ym[y]++
 	}
 
 	ans := 0
-	for x, m := range xm {
-		if _, ok := ym[x]; ok {
-			ans += len(m) * len(ym[x])
-		}
+	for x := range xm {
+		ans += xm[x] * ym[x]
 	}
 	fmt.Println(ans)
 }
