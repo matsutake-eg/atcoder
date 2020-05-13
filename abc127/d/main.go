@@ -8,44 +8,43 @@ import (
 	"strconv"
 )
 
-type card struct{ number, stock int }
-type cards []card
+var sc = bufio.NewScanner(os.Stdin)
 
-func (c cards) Len() int           { return len(c) }
-func (c cards) Swap(i, j int)      { c[i], c[j] = c[j], c[i] }
-func (c cards) Less(i, j int) bool { return c[i].number > c[j].number }
+func scanInt() int {
+	sc.Scan()
+	iv, _ := strconv.Atoi(sc.Text())
+	return iv
+}
+
+func init() {
+	sc.Split(bufio.ScanWords)
+}
 
 func main() {
-	var n, m int
-	fmt.Scan(&n, &m)
-	sc := bufio.NewScanner(os.Stdin)
-	sc.Split(bufio.ScanWords)
+	n, m := scanInt(), scanInt()
 	as := make([]int, n)
 	sum := 0
 	for i := range as {
-		sc.Scan()
-		as[i], _ = strconv.Atoi(sc.Text())
+		as[i] = scanInt()
 		sum += as[i]
 	}
 	sort.Ints(as)
 
-	cs := cards(make([]card, m))
+	type card struct{ n, s int }
+	cs := make([]card, m)
 	for i := range cs {
-		sc.Scan()
-		cs[i].stock, _ = strconv.Atoi(sc.Text())
-		sc.Scan()
-		cs[i].number, _ = strconv.Atoi(sc.Text())
+		cs[i].s, cs[i].n = scanInt(), scanInt()
 	}
-	sort.Sort(cs)
+	sort.Slice(cs, func(i, j int) bool { return cs[i].n > cs[j].n })
 
-	var p int
+	p := 0
 lb:
 	for _, v := range cs {
-		for i := 0; i < v.stock; i++ {
-			if p >= len(as) || v.number < as[p] {
+		for i := 0; i < v.s; i++ {
+			if p >= len(as) || v.n < as[p] {
 				break lb
 			}
-			sum += v.number - as[p]
+			sum += v.n - as[p]
 			p++
 		}
 	}

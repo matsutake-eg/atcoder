@@ -9,41 +9,40 @@ import (
 
 var sc = bufio.NewScanner(os.Stdin)
 
-func readInt() int {
-	iv, _ := strconv.Atoi(readStr())
+func scanInt() int {
+	iv, _ := strconv.Atoi(scanString())
 	return iv
 }
 
-func readStr() string {
+func scanString() string {
 	sc.Scan()
 	return sc.Text()
 }
 
-type poll struct {
-	s string
-	c int
+func init() {
+	sc.Split(bufio.ScanWords)
+	sc.Buffer(make([]byte, 100001), 100001*100)
 }
-type polls []poll
-
-func (p polls) Len() int           { return len(p) }
-func (p polls) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
-func (p polls) Less(i, j int) bool { return p[i].c > p[j].c }
 
 func main() {
-	n := readInt()
-	m := make(map[string]int, n)
+	n := scanInt()
+	xm := make(map[string]int, n)
 	for i := 0; i < n; i++ {
-		s := readStr()
-		m[s]++
+		s := scanString()
+		xm[s]++
 	}
 
-	ps := polls(make([]poll, 0, len(m)))
-	for s, c := range m {
+	type poll struct {
+		s string
+		c int
+	}
+	ps := make([]poll, 0, len(xm))
+	for s, c := range xm {
 		ps = append(ps, poll{s, c})
 	}
-	sort.Sort(ps)
+	sort.Slice(ps, func(i, j int) bool { return ps[i].c > ps[j].c })
 
-	ans := make([]string, 0, len(m))
+	ans := make([]string, 0, len(xm))
 	pmx := ps[0]
 	ans = append(ans, pmx.s)
 	for _, p := range ps[1:] {

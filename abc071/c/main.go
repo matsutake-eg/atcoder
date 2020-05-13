@@ -20,13 +20,6 @@ func init() {
 	sc.Split(bufio.ScanWords)
 }
 
-type stick struct{ a, c int }
-type sticks []stick
-
-func (s sticks) Len() int           { return len(s) }
-func (s sticks) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
-func (s sticks) Less(i, j int) bool { return s[i].a > s[j].a }
-
 func main() {
 	n := readInt()
 	m := make(map[int]int, n)
@@ -35,11 +28,12 @@ func main() {
 		m[a]++
 	}
 
-	sts := sticks(make([]stick, 0, len(m)))
+	type stick struct{ a, c int }
+	sts := make([]stick, 0, len(m))
 	for a, c := range m {
 		sts = append(sts, stick{a, c})
 	}
-	sort.Sort(sts)
+	sort.Slice(sts, func(i, j int) bool { return sts[i].a > sts[j].a })
 	t := 0
 	for _, st := range sts {
 		if t == 0 {

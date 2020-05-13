@@ -8,13 +8,6 @@ import (
 	"strconv"
 )
 
-type arm struct{ l, r int }
-type arms []arm
-
-func (a arms) Len() int           { return len(a) }
-func (a arms) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
-func (a arms) Less(i, j int) bool { return a[i].r < a[j].r }
-
 var sc = bufio.NewScanner(os.Stdin)
 
 func scanInt() int {
@@ -29,14 +22,15 @@ func init() {
 
 func main() {
 	n := scanInt()
-	as := arms(make([]arm, n))
+	type arm struct{ l, r int }
+	as := make([]arm, n)
 	for i := range as {
 		x, l := scanInt(), scanInt()
 		as[i].l = x - l
 		as[i].r = x + l
 
 	}
-	sort.Sort(as)
+	sort.Slice(as, func(i, j int) bool { return as[i].r < as[j].r })
 
 	ans := 1
 	r := as[0].r

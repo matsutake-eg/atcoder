@@ -5,24 +5,33 @@ import (
 	"fmt"
 	"os"
 	"sort"
+	"strconv"
 )
 
-type sortRune []rune
+var sc = bufio.NewScanner(os.Stdin)
 
-func (r sortRune) Len() int           { return len(r) }
-func (r sortRune) Swap(i, j int)      { r[i], r[j] = r[j], r[i] }
-func (r sortRune) Less(i, j int) bool { return r[i] < r[j] }
+func scanInt() int {
+	iv, _ := strconv.Atoi(scanString())
+	return iv
+}
+
+func scanString() string {
+	sc.Scan()
+	return sc.Text()
+}
+
+func init() {
+	sc.Split(bufio.ScanWords)
+	sc.Buffer(make([]byte, 100001), 100001*100)
+}
 
 func main() {
-	var n int
-	fmt.Scan(&n)
-
-	sc := bufio.NewScanner(os.Stdin)
+	n := scanInt()
 	m := make(map[string]int, n)
 	for i := 0; i < n; i++ {
-		sc.Scan()
-		r := sortRune([]rune(sc.Text()))
-		sort.Sort(r)
+		s := scanString()
+		r := []rune(s)
+		sort.Slice(r, func(i, j int) bool { return r[i] < r[j] })
 		m[string(r)]++
 	}
 

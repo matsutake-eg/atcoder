@@ -8,28 +8,27 @@ import (
 	"strconv"
 )
 
-type sushi struct{ t, d int }
-type sushis []sushi
+var sc = bufio.NewScanner(os.Stdin)
 
-func (s sushis) Len() int           { return len(s) }
-func (s sushis) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
-func (s sushis) Less(i, j int) bool { return s[i].d > s[j].d }
+func scanInt() int {
+	sc.Scan()
+	iv, _ := strconv.Atoi(sc.Text())
+	return iv
+}
+
+func init() {
+	sc.Split(bufio.ScanWords)
+}
 
 func main() {
-	var n, k int
-	fmt.Scan(&n, &k)
-
-	sc := bufio.NewScanner(os.Stdin)
-	sc.Split(bufio.ScanWords)
-	s := sushis(make([]sushi, n))
+	n, k := scanInt(), scanInt()
+	type sushi struct{ t, d int }
+	s := make([]sushi, n)
 	for i := range s {
-		sc.Scan()
-		s[i].t, _ = strconv.Atoi(sc.Text())
-		sc.Scan()
-		s[i].d, _ = strconv.Atoi(sc.Text())
+		s[i].t, s[i].d = scanInt(), scanInt()
 	}
 
-	sort.Sort(s)
+	sort.Slice(s, func(i, j int) bool { return s[i].d > s[j].d })
 	sumD := 0
 	mt := make(map[int]bool, n)
 	src := make([]sushi, 0, k)

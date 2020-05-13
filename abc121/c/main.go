@@ -8,48 +8,36 @@ import (
 	"strconv"
 )
 
-type shop struct {
-	price int
-	stock int
+var sc = bufio.NewScanner(os.Stdin)
+
+func scanInt() int {
+	sc.Scan()
+	iv, _ := strconv.Atoi(sc.Text())
+	return iv
 }
 
-type shops []shop
-
-func (s shops) Len() int {
-	return len(s)
-}
-
-func (s shops) Swap(i, j int) {
-	s[i], s[j] = s[j], s[i]
-}
-
-func (s shops) Less(i, j int) bool {
-	return s[i].price < s[j].price
+func init() {
+	sc.Split(bufio.ScanWords)
 }
 
 func main() {
-	var n, m int
-	fmt.Scan(&n, &m)
-	sc := bufio.NewScanner(os.Stdin)
-	sc.Split(bufio.ScanWords)
-	var s shops = make([]shop, n)
+	n, m := scanInt(), scanInt()
+	type shop struct{ p, s int }
+	s := make([]shop, n)
 	for i := 0; i < n; i++ {
-		sc.Scan()
-		s[i].price, _ = strconv.Atoi(sc.Text())
-		sc.Scan()
-		s[i].stock, _ = strconv.Atoi(sc.Text())
+		s[i].p, s[i].s = scanInt(), scanInt()
 	}
-	sort.Sort(s)
+	sort.Slice(s, func(i, j int) bool { return s[i].p < s[j].p })
 
 	count := 0
 	sum := 0
 	for i := 0; i < n; i++ {
-		if v := count + s[i].stock; v >= m {
-			sum += s[i].price * (m - count)
+		if v := count + s[i].s; v >= m {
+			sum += s[i].p * (m - count)
 			break
 		} else {
 			count = v
-			sum += s[i].price * s[i].stock
+			sum += s[i].p * s[i].s
 		}
 	}
 	fmt.Println(sum)

@@ -8,44 +8,42 @@ import (
 	"strconv"
 )
 
-type city struct{ index, prefecture, year int }
-type cities []city
+var sc = bufio.NewScanner(os.Stdin)
 
-func (c cities) Len() int      { return len(c) }
-func (c cities) Swap(i, j int) { c[i], c[j] = c[j], c[i] }
-func (c cities) Less(i, j int) bool {
-	if c[i].prefecture == c[j].prefecture {
-		return c[i].year < c[j].year
-	}
-	return c[i].prefecture < c[j].prefecture
+func scanInt() int {
+	sc.Scan()
+	iv, _ := strconv.Atoi(sc.Text())
+	return iv
+}
+
+func init() {
+	sc.Split(bufio.ScanWords)
 }
 
 func main() {
-	var n, m int
-	fmt.Scan(&n, &m)
-
-	sc := bufio.NewScanner(os.Stdin)
-	sc.Split(bufio.ScanWords)
-	cs := cities(make([]city, m))
+	_, m := scanInt(), scanInt()
+	type city struct{ i, p, y int }
+	cs := make([]city, m)
 	for i := range cs {
-		cs[i].index = i
-		sc.Scan()
-		cs[i].prefecture, _ = strconv.Atoi(sc.Text())
-		sc.Scan()
-		cs[i].year, _ = strconv.Atoi(sc.Text())
+		cs[i].i = i
+		cs[i].p, cs[i].y = scanInt(), scanInt()
 	}
-
-	sort.Sort(cs)
+	sort.Slice(cs, func(i, j int) bool {
+		if cs[i].p == cs[j].p {
+			return cs[i].y < cs[j].y
+		}
+		return cs[i].p < cs[j].p
+	})
 
 	xs := make([]string, m)
 	p, c := 0, 0
 	for _, v := range cs {
-		if p != v.prefecture {
-			p = v.prefecture
+		if p != v.p {
+			p = v.p
 			c = 0
 		}
 		c++
-		xs[v.index] = fmt.Sprintf("%06d%06d", p, c)
+		xs[v.i] = fmt.Sprintf("%06d%06d", p, c)
 	}
 
 	wr := bufio.NewWriter(os.Stdout)

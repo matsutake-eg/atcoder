@@ -1,37 +1,51 @@
 package main
 
 import (
-	"fmt"
+	"bufio"
+	"os"
 	"sort"
+	"strconv"
 )
 
-type Restaurant struct {
-	Name  string
-	Point int
-	Index int
-}
-type Restaurants []Restaurant
+var sc = bufio.NewScanner(os.Stdin)
 
-func (r Restaurants) Len() int      { return len(r) }
-func (r Restaurants) Swap(i, j int) { r[i], r[j] = r[j], r[i] }
-func (r Restaurants) Less(i, j int) bool {
-	if r[i].Name == r[j].Name {
-		return r[i].Point > r[j].Point
-	}
-	return r[i].Name < r[j].Name
+func scanInt() int {
+	iv, _ := strconv.Atoi(scanString())
+	return iv
+}
+
+func scanString() string {
+	sc.Scan()
+	return sc.Text()
+}
+
+func init() {
+	sc.Split(bufio.ScanWords)
+	sc.Buffer(make([]byte, 100001), 100001*100)
 }
 
 func main() {
-	var n int
-	fmt.Scan(&n)
-	var rs Restaurants = make([]Restaurant, n)
+	n := scanInt()
+	type restaurant struct {
+		n    string
+		p, i int
+	}
+	rs := make([]restaurant, n)
 	for i := 0; i < n; i++ {
-		fmt.Scan(&rs[i].Name, &rs[i].Point)
-		rs[i].Index = i + 1
+		rs[i].i = i + 1
+		rs[i].n, rs[i].p = scanString(), scanInt()
 	}
 
-	sort.Sort(rs)
+	sort.Slice(rs, func(i, j int) bool {
+		if rs[i].n == rs[j].n {
+			return rs[i].p > rs[j].p
+		}
+		return rs[i].n < rs[j].n
+	})
+
+	var wr = bufio.NewWriter(os.Stdout)
 	for _, v := range rs {
-		fmt.Println(v.Index)
+		wr.WriteString(strconv.Itoa(v.i) + "\n")
 	}
+	wr.Flush()
 }

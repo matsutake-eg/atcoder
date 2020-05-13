@@ -25,27 +25,21 @@ func init() {
 	sc.Buffer(make([]byte, 100001), 100001*100)
 }
 
-type city struct {
-	s string
-	p int
-}
-type cities []city
-
-func (c cities) Len() int           { return len(c) }
-func (c cities) Swap(i, j int)      { c[i], c[j] = c[j], c[i] }
-func (c cities) Less(i, j int) bool { return c[i].p > c[j].p }
-
 func main() {
 	n := scanInt()
 	sum := 0
-	cs := cities(make([]city, n))
+	type city struct {
+		s string
+		p int
+	}
+	cs := make([]city, n)
 	for i := range cs {
 		s, p := scanString(), scanInt()
 		cs[i].s, cs[i].p = s, p
 		sum += p
 	}
 
-	sort.Sort(cs)
+	sort.Slice(cs, func(i, j int) bool { return cs[i].p > cs[j].p })
 	if cs[0].p > sum/2 {
 		fmt.Println(cs[0].s)
 	} else {

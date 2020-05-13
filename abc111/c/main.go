@@ -8,59 +8,60 @@ import (
 	"strconv"
 )
 
-type Entry struct{ key, value int }
-type List []Entry
+var sc = bufio.NewScanner(os.Stdin)
 
-func (l List) Len() int           { return len(l) }
-func (l List) Swap(i, j int)      { l[i], l[j] = l[j], l[i] }
-func (l List) Less(i, j int) bool { return l[i].value > l[j].value }
+func scanInt() int {
+	sc.Scan()
+	iv, _ := strconv.Atoi(sc.Text())
+	return iv
+}
+
+func init() {
+	sc.Split(bufio.ScanWords)
+}
 
 func main() {
 	var n int
 	fmt.Scan(&n)
 
-	sc := bufio.NewScanner(os.Stdin)
-	sc.Split(bufio.ScanWords)
-	om := make(map[int]int)
-	em := make(map[int]int)
-	var x int
+	om := make(map[int]int, n/2)
+	em := make(map[int]int, n/2)
 	for i := 0; i < n/2; i++ {
-		sc.Scan()
-		x, _ = strconv.Atoi(sc.Text())
-		om[x]++
-		sc.Scan()
-		x, _ = strconv.Atoi(sc.Text())
-		em[x]++
+		xo := scanInt()
+		om[xo]++
+		xe := scanInt()
+		em[xe]++
 	}
 
-	var ol List = make([]Entry, len(om))
+	type entry struct{ k, v int }
+	ol := make([]entry, len(om))
 	index := 0
 	for k, v := range om {
-		ol[index].key, ol[index].value = k, v
+		ol[index].k, ol[index].v = k, v
 		index++
 	}
-	sort.Sort(ol)
+	sort.Slice(ol, func(i, j int) bool { return ol[i].v > ol[j].v })
 
-	var el List = make([]Entry, len(em))
+	el := make([]entry, len(em))
 	index = 0
 	for k, v := range em {
-		el[index].key, el[index].value = k, v
+		el[index].k, el[index].v = k, v
 		index++
 	}
-	sort.Sort(el)
+	sort.Slice(el, func(i, j int) bool { return el[i].v > el[j].v })
 
-	if ol[0].key != el[0].key {
-		fmt.Println(n - ol[0].value - el[0].value)
+	if ol[0].k != el[0].k {
+		fmt.Println(n - ol[0].v - el[0].v)
 		return
 	}
 
 	if len(ol) == 1 {
-		ol = append(ol, Entry{-1, 0})
+		ol = append(ol, entry{-1, 0})
 	}
 	if len(el) == 1 {
-		el = append(el, Entry{-1, 0})
+		el = append(el, entry{-1, 0})
 	}
-	if v1, v2 := n-ol[0].value-el[1].value, n-ol[1].value-el[0].value; v1 < v2 {
+	if v1, v2 := n-ol[0].v-el[1].v, n-ol[1].v-el[0].v; v1 < v2 {
 		fmt.Println(v1)
 	} else {
 		fmt.Println(v2)

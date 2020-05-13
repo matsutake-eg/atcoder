@@ -1,42 +1,45 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"sort"
+	"strconv"
 )
 
-type point struct{ x, y int }
-type sortByX []point
+var sc = bufio.NewScanner(os.Stdin)
 
-func (s sortByX) Len() int           { return len(s) }
-func (s sortByX) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
-func (s sortByX) Less(i, j int) bool { return s[i].x < s[j].x }
+func scanInt() int {
+	sc.Scan()
+	iv, _ := strconv.Atoi(sc.Text())
+	return iv
+}
 
-type sortByY []point
-
-func (s sortByY) Len() int           { return len(s) }
-func (s sortByY) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
-func (s sortByY) Less(i, j int) bool { return s[i].y > s[j].y }
+func init() {
+	sc.Split(bufio.ScanWords)
+}
 
 func main() {
 	var n int
 	fmt.Scan(&n)
 
-	rs := make(map[point]bool, n)
+	type point struct{ x, y int }
+	rs := make(map[point]bool)
 	for i := 0; i < n; i++ {
-		p := point{}
-		fmt.Scan(&p.x, &p.y)
-		rs[p] = true
-	}
-	bs := sortByX(make([]point, n))
-	for i := range bs {
-		fmt.Scan(&bs[i].x, &bs[i].y)
+		x, y := scanInt(), scanInt()
+		rs[point{x, y}] = true
 	}
 
-	sort.Sort(bs)
+	bs := make([]point, n)
+	for i := range bs {
+		bs[i].x, bs[i].y = scanInt(), scanInt()
+	}
+
+	sort.Slice(bs, func(i, j int) bool { return bs[i].x < bs[j].x })
 	ans := 0
 	for _, b := range bs {
-		ps := sortByY(make([]point, 0, n))
+		ps := make([]point, 0, n)
 		for r := range rs {
 			if r.x < b.x && r.y < b.y {
 				ps = append(ps, r)
@@ -44,7 +47,7 @@ func main() {
 		}
 
 		if len(ps) > 0 {
-			sort.Sort(ps)
+			sort.Slice(ps, func(i, j int) bool { return ps[i].y > ps[j].y })
 			delete(rs, ps[0])
 			ans++
 		}

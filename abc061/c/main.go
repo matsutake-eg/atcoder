@@ -20,21 +20,15 @@ func init() {
 	sc.Split(bufio.ScanWords)
 }
 
-type number struct{ a, b int }
-type numbers []number
-
-func (n numbers) Len() int           { return len(n) }
-func (n numbers) Swap(i, j int)      { n[i], n[j] = n[j], n[i] }
-func (n numbers) Less(i, j int) bool { return n[i].a < n[j].a }
-
 func main() {
 	n, k := scanInt(), scanInt()
-	nums := numbers(make([]number, n))
+	type number struct{ a, b int }
+	nums := make([]number, n)
 	for i := range nums {
 		nums[i].a, nums[i].b = scanInt(), scanInt()
 	}
 
-	sort.Sort(nums)
+	sort.Slice(nums, func(i, j int) bool { return nums[i].a < nums[j].a })
 	cnt := 0
 	for _, num := range nums {
 		if cnt+num.b >= k {

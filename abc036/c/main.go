@@ -7,13 +7,6 @@ import (
 	"strconv"
 )
 
-type sit struct{ x, i int }
-type sits []sit
-
-func (s sits) Len() int           { return len(s) }
-func (s sits) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
-func (s sits) Less(i, j int) bool { return s[i].x < s[j].x }
-
 var sc = bufio.NewScanner(os.Stdin)
 
 func scanInt() int {
@@ -28,12 +21,13 @@ func init() {
 
 func main() {
 	n := scanInt()
-	ss := sits(make([]sit, n))
+	type sit struct{ x, i int }
+	ss := make([]sit, n)
 	for i := range ss {
 		ss[i].x, ss[i].i = scanInt(), i
 	}
 
-	sort.Sort(ss)
+	sort.Slice(ss, func(i, j int) bool { return ss[i].x < ss[j].x })
 	cnt := 0
 	ans := make([]int, n)
 	ans[ss[0].i] = 0
