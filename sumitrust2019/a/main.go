@@ -1,5 +1,14 @@
 package main
 
-func main() {
+import "fmt"
 
+func main() {
+	var m1, d1, m2, d2 int
+	fmt.Scan(&m1, &d1, &m2, &d2)
+
+	if d1 > d2 {
+		fmt.Println(1)
+	} else {
+		fmt.Println(0)
+	}
 }
