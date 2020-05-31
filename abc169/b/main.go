@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -22,22 +23,22 @@ func init() {
 func main() {
 	n := scanInt()
 	a := make([]int, n)
-
 	for i := range a {
 		a[i] = scanInt()
-		if a[i] == 0 {
-			fmt.Println(0)
-			return
-		}
+	}
+	sort.Ints(a)
+	if a[0] == 0 {
+		fmt.Println(0)
+		return
 	}
 
 	ans := 1
 	for _, v := range a {
-		ans *= v
-		if ans > 1000000000000000000 || ans < v {
+		if v > 1000000000000000000/ans {
 			fmt.Println(-1)
 			return
 		}
+		ans *= v
 	}
 	fmt.Println(ans)
 }
