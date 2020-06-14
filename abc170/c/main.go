@@ -34,9 +34,9 @@ func main() {
 		xm[p] = true
 	}
 
-	d := 10000
+	d := 100
 	var ans int
-	for i := -100; i <= 200; i++ {
+	for i := 0; i <= 101; i++ {
 		if xm[i] {
 			continue
 		}
