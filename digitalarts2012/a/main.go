@@ -21,7 +21,7 @@ func scanString() string {
 
 func init() {
 	sc.Split(bufio.ScanLines)
-	sc.Buffer(make([]byte, 100001), 100001*100)
+	sc.Buffer(make([]byte, 100000), 100000000)
 }
 
 func main() {
