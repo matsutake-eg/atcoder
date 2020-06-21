@@ -6,12 +6,9 @@ func main() {
 	var a string
 	fmt.Scan(&a)
 
-	az := "abcdefghijklmnopqrstuvwxyz"
-	for _, r := range az {
-		if r == rune(a[0]) {
-			fmt.Println("a")
-			return
-		}
+	if a[0] <= 'Z' {
+		fmt.Println("A")
+	} else {
+		fmt.Println("a")
 	}
-	fmt.Println("A")
 }
