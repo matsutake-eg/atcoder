@@ -1,5 +1,10 @@
 package main
 
-func main() {
+import "fmt"
 
+func main() {
+	var s float64
+	fmt.Scan(&s)
+
+	fmt.Println(50 / s)
 }
