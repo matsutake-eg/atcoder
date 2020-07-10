@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"sort"
 	"strconv"
 )
 
@@ -20,32 +19,35 @@ func init() {
 	sc.Split(bufio.ScanWords)
 }
 
+func max(x, y int) int {
+	if x > y {
+		return x
+	}
+	return y
+}
+
 func main() {
 	n := scanInt()
-	t := make([]int, n)
-	tm := make(map[int]int)
-	for i := range t {
-		t[i] = scanInt()
-		tm[t[i]]++
+	h := make([]int, n)
+	for i := range h {
+		h[i] = scanInt()
 	}
-	sort.Ints(t)
 
-	sum := 0
-	for i, v := range t {
-		sum += v * (len(t) - i)
+	u := make([]int, n)
+	for i := 1; i < n; i++ {
+		if h[i] > h[i-1] {
+			u[i] = u[i-1] + 1
+		}
 	}
-	fmt.Println(sum)
-
-	ans := 1
-	const mod = 1000000007
-	for _, v := range tm {
-		if v == 1 {
-			continue
+	d := make([]int, n)
+	for i := n - 2; i >= 0; i-- {
+		if h[i] > h[i+1] {
+			d[i] = d[i+1] + 1
 		}
-		for i := 2; i <= v; i++ {
-			ans *= i
-			ans %= mod
-		}
+	}
+	ans := 0
+	for i := 0; i < n; i++ {
+		ans = max(ans, u[i]+d[i]+1)
 	}
 	fmt.Println(ans)
 }
