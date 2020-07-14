@@ -13,13 +13,12 @@ func main() {
 	)
 	fmt.Scan(&n, &s, &k)
 
-	var wr = bufio.NewWriter(os.Stdout)
-
-	for i := 0; i < n; i++ {
-		if s[i] != s[k-1] {
+	wr := bufio.NewWriter(os.Stdout)
+	for _, r := range s {
+		if r != rune(s[k-1]) {
 			wr.WriteString("*")
 		} else {
-			wr.WriteString(string(s[i]))
+			wr.WriteString(string(r))
 		}
 	}
 	wr.WriteString("\n")

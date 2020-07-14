@@ -1,6 +1,28 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+)
+
+var sc = bufio.NewScanner(os.Stdin)
+
+func scanInt() int {
+	iv, _ := strconv.Atoi(scanString())
+	return iv
+}
+
+func scanString() string {
+	sc.Scan()
+	return sc.Text()
+}
+
+func init() {
+	sc.Split(bufio.ScanWords)
+	sc.Buffer(make([]byte, 100000), 100000000)
+}
 
 func min(x, y int) int {
 	if x < y {
@@ -10,26 +32,22 @@ func min(x, y int) int {
 }
 
 func main() {
-	var (
-		n int
-		s string
-	)
-	fmt.Scan(&n, &s)
-
-	w, b := 0, 0
-	for i := 0; i < n; i++ {
-		if s[i] == '.' {
+	_ = scanInt()
+	s := scanString()
+	b, w := 0, 0
+	for _, r := range s {
+		if r == '.' {
 			w++
 		}
 	}
 	ans := w
-	for i := 0; i < n; i++ {
-		if s[i] == '#' {
-			b++
-		} else {
+	for _, r := range s {
+		if r == '.' {
 			w--
+		} else {
+			b++
 		}
-		ans = min(ans, w+b)
+		ans = min(ans, b+w)
 	}
 	fmt.Println(ans)
 }
