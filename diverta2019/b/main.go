@@ -8,8 +8,8 @@ func main() {
 
 	ans := 0
 	for i := 0; i*r <= n; i++ {
-		for j := 0; i*r+j*g <= n; j++ {
-			if (n-i*r-j*g)%b == 0 {
+		for j := 0; j*g+i*r <= n; j++ {
+			if (n-j*g-i*r)%b == 0 {
 				ans++
 			}
 		}

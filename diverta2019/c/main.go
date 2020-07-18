@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"strings"
 )
 
 var sc = bufio.NewScanner(os.Stdin)
@@ -22,7 +21,7 @@ func scanString() string {
 
 func init() {
 	sc.Split(bufio.ScanWords)
-	sc.Buffer(make([]byte, 100001), 100001*100)
+	sc.Buffer(make([]byte, 100000), 100000000)
 }
 
 func min(x, y int) int {
@@ -35,29 +34,33 @@ func min(x, y int) int {
 func main() {
 	n := scanInt()
 	ans := 0
-	cab, ca, cb := 0, 0, 0
+	ba, bx, xa := 0, 0, 0
 	for i := 0; i < n; i++ {
 		s := scanString()
-		ans += strings.Count(s, "AB")
 		if s[0] == 'B' && s[len(s)-1] == 'A' {
-			cab++
+			ba++
 		} else if s[0] == 'B' {
-			cb++
+			bx++
 		} else if s[len(s)-1] == 'A' {
-			ca++
+			xa++
+		}
+		for i := range s[:len(s)-1] {
+			if s[i:i+2] == "AB" {
+				ans++
+			}
 		}
 	}
-	if ca > 0 && cab > 0 {
-		ca--
+	if bx > 0 && ba > 0 {
+		bx--
 		ans++
 	}
-	if cb > 0 && cab > 0 {
-		cb--
+	if xa > 0 && ba > 0 {
+		xa--
 		ans++
 	}
-	if cab > 0 {
-		ans += cab - 1
+	if ba > 0 {
+		ans += ba - 1
 	}
-	ans += min(ca, cb)
+	ans += min(bx, xa)
 	fmt.Println(ans)
 }
