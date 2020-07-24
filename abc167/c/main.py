@@ -2,9 +2,7 @@ n, m, x = map(int, input().split())
 c = [0] * n
 a = [0] * n
 for i in range(n):
-    xs = list(map(int, input().split()))
-    c[i] = xs[0]
-    a[i] = xs[1:]
+    c[i], *a[i] = list(map(int, input().split()))
 ans = 10 ** 9
 for i in range(2 ** n):
     csum = 0
