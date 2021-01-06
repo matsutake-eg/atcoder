@@ -17,14 +17,11 @@ const MOD: usize = 1_000_000_007;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1); m],
-        // a:[[usize;m];n],
+        n:usize,
+        x:[i64;n],
     }
+
+    println!("{}", x.iter().fold(0, |acc, x| acc + x.abs()));
+    println!("{}", (x.iter().fold(0, |acc, x| acc + x * x) as f64).sqrt());
+    println!("{}", x.iter().map(|x| x.abs()).max().unwrap());
 }

@@ -17,14 +17,21 @@ const MOD: usize = 1_000_000_007;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1); m],
-        // a:[[usize;m];n],
+        n:usize,
+    }
+
+    let mut ans = HashSet::new();
+    for i in 1..=n {
+        if i * i > n {
+            break;
+        } else if n % i == 0 {
+            ans.insert(i);
+            ans.insert(n / i);
+        }
+    }
+    let mut ans: Vec<usize> = ans.into_iter().collect();
+    ans.sort();
+    for v in ans {
+        println!("{}", v);
     }
 }
