@@ -17,14 +17,25 @@ const MOD: usize = 1_000_000_007;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1); m],
-        // a:[[usize;m];n],
+        n:usize,
+        xy: [(i64,i64);n],
     }
+
+    for (x1, y1) in &xy {
+        for (x2, y2) in &xy {
+            if x1 == x2 && y1 == y2 {
+                continue;
+            }
+            for (x3, y3) in &xy {
+                if (x3 == x1 && y3 == y1) || (x3 == x2 && y3 == y2) {
+                    continue;
+                }
+                if (y2 - y1) * (x3 - x2) == (y3 - y2) * (x2 - x1) {
+                    println!("Yes");
+                    return;
+                }
+            }
+        }
+    }
+    println!("No");
 }

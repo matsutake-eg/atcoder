@@ -17,14 +17,50 @@ const MOD: usize = 1_000_000_007;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1); m],
-        // a:[[usize;m];n],
+        s:Chars,
     }
+
+    if s.len() == 1 {
+        if s[0] == '8' {
+            println!("Yes");
+        } else {
+            println!("No");
+        }
+        return;
+    } else if s.len() == 2 {
+        if s.iter().collect::<String>().parse::<usize>().unwrap() % 8 == 0 {
+            println!("Yes");
+        } else if s.iter().rev().collect::<String>().parse::<usize>().unwrap() % 8 == 0 {
+            println!("Yes");
+        } else {
+            println!("No");
+        }
+        return;
+    }
+
+    let mut hm = HashMap::new();
+    for c in s {
+        *hm.entry(c).or_insert(0) += 1;
+    }
+
+    let mut i = 104;
+    while i < 1000 {
+        let mut tm = HashMap::new();
+        for c in format!("{:03}", i).chars() {
+            *tm.entry(c).or_insert(0) += 1;
+        }
+        let mut is_ok = true;
+        for (k, v) in tm {
+            if hm.get(&k) == None || hm.get(&k) < Some(&v) {
+                is_ok = false;
+                break;
+            }
+        }
+        if is_ok {
+            println!("Yes");
+            return;
+        }
+        i += 8;
+    }
+    println!("No");
 }
