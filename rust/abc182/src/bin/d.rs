@@ -17,14 +17,26 @@ const MOD: usize = 1_000_000_007;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1); m],
-        // a:[[usize;m];n],
+        n:usize,
+        a:[i64;n],
     }
+
+    let mut p = vec![0; n];
+    let mut q = vec![0; n];
+    let mut sum = 0;
+    let mut mv = 0;
+    for i in 0..n {
+        sum += a[i];
+        p[i] = sum;
+        mv = max(mv, sum);
+        q[i] = mv;
+    }
+
+    let mut ans = 0;
+    let mut now = 0;
+    for i in 0..n {
+        ans = max(ans, now + q[i]);
+        now += p[i];
+    }
+    println!("{}", ans);
 }
