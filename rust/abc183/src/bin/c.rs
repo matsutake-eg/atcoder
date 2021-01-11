@@ -17,14 +17,20 @@ const MOD: usize = 1_000_000_007;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1); m],
-        // a:[[usize;m];n],
+        n:usize,
+        k:usize,
+        t:[[usize;n];n],
     }
+
+    let mut ans = 0;
+    for p in (1..n).permutations(n - 1).collect::<Vec<Vec<usize>>>() {
+        let mut sum = t[0][p[0]] + t[p[p.len() - 1]][0];
+        for i in 0..(p.len() - 1) {
+            sum += t[p[i]][p[i + 1]];
+        }
+        if sum == k {
+            ans += 1;
+        }
+    }
+    println!("{}", ans);
 }
