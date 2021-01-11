@@ -17,14 +17,23 @@ const MOD: usize = 1_000_000_007;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1); m],
-        // a:[[usize;m];n],
+        n:usize,
+        w:i64,
+        stp: [(usize,usize,i64);n],
     }
+
+    let mut l = vec![0; 200_001];
+    for (s, t, p) in stp {
+        l[s] += p;
+        l[t] += -p;
+    }
+    let l = l.iter().cumsum().collect::<Vec<i64>>();
+    println!(
+        "{}",
+        if *l.iter().max().unwrap() > w {
+            "No"
+        } else {
+            "Yes"
+        }
+    );
 }
