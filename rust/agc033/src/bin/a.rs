@@ -42,12 +42,12 @@ fn main() {
         let j = j as i64;
         let h = h as i64;
         let w = w as i64;
-        for (ni, nj) in &[(i, j + 1), (i, j - 1), (i + 1, j), (i - 1, j)] {
-            if *ni < 0 || *ni >= h || *nj < 0 || *nj >= w {
+        for &(ni, nj) in &[(i, j + 1), (i, j - 1), (i + 1, j), (i - 1, j)] {
+            if ni < 0 || ni >= h || nj < 0 || nj >= w {
                 continue;
             }
-            let ni = *ni as usize;
-            let nj = *nj as usize;
+            let ni = ni as usize;
+            let nj = nj as usize;
             if seen.contains(&(ni, nj)) {
                 continue;
             }
