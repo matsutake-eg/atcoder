@@ -12,14 +12,26 @@ use std::f64::consts::*;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1);m],
-        // a:[[usize;m];n],
+        n:usize,
+        t:Chars,
+    }
+
+    if n == 1 && t[0] == '1' {
+        println!("{}", 20_000_000_000usize);
+        return;
+    }
+
+    if [['1', '1', '0'], ['1', '0', '1'], ['0', '1', '1']]
+        .iter()
+        .any(|v| v.into_iter().cycle().zip(&t).all(|(a, b)| a == b))
+    {
+        let k = t.iter().filter(|&x| *x == '0').count();
+        let mut ans = 10_000_000_000usize - k;
+        if t[t.len() - 1] == '0' {
+            ans += 1;
+        }
+        println!("{}", ans);
+    } else {
+        println!("{}", 0);
     }
 }
