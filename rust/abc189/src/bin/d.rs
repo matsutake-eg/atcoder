@@ -12,14 +12,22 @@ use std::f64::consts::*;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1);m],
-        // a:[[usize;m];n],
+        n:usize,
+        s:[String;n],
     }
+
+    println!("{}", dfs(&s));
+}
+
+fn dfs(s: &[String]) -> usize {
+    let l = s.len();
+    if l == 0 {
+        return 1;
+    }
+
+    dfs(&s[..(l - 1)])
+        + match s[l - 1].as_str() {
+            "OR" => 1 << l,
+            _ => 0,
+        }
 }

@@ -12,14 +12,17 @@ use std::f64::consts::*;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1);m],
-        // a:[[usize;m];n],
+        n:usize,
+        a:[usize;n],
     }
+
+    let mut ans = 0;
+    for i in 0..n {
+        let mut mn = std::usize::MAX;
+        for j in i..n {
+            mn = min(mn, a[j]);
+            ans = max(ans, mn * (j - i + 1));
+        }
+    }
+    println!("{}", ans);
 }
