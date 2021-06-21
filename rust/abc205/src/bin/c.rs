@@ -13,14 +13,24 @@ use superslice::Ext as _;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1);m],
-        // a:[[usize;m];n],
+        a:i64,
+        b:i64,
+        c:i64,
+    }
+
+    if c % 2 == 1 {
+        solve(a, b);
+    } else {
+        solve(a * a, b * b);
+    }
+}
+
+fn solve(x: i64, y: i64) {
+    if x == y {
+        println!("=");
+    } else if x < y {
+        println!("<");
+    } else {
+        println!(">");
     }
 }

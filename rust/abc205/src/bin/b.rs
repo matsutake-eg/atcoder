@@ -13,14 +13,17 @@ use superslice::Ext as _;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1);m],
-        // a:[[usize;m];n],
+        n:usize,
+        a:[usize;n],
     }
+
+    let mut a = a;
+    a.sort();
+    for i in 1..=n {
+        if i != a[i - 1] {
+            println!("No");
+            return;
+        }
+    }
+    println!("Yes");
 }

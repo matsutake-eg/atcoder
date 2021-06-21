@@ -13,14 +13,9 @@ use superslice::Ext as _;
 #[proconio::fastout]
 fn main() {
     proconio::input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1);m],
-        // a:[[usize;m];n],
+        a:f64,
+        b:f64,
     }
+
+    println!("{}", a / 100.0 * b);
 }
