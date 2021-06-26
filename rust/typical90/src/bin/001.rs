@@ -19,31 +19,22 @@ fn main() {
         a:[usize;n],
     }
 
-    let mut b = vec![0; n + 1];
-    b[0] = a[0];
-    for i in 1..n {
-        b[i] = a[i] - a[i - 1];
-    }
-    b[n] = l - a[n - 1];
-
-    let mut ans = l / 2;
-    let mut total = 0;
-    let mut cnt = 0;
-    loop {
-        for v in &b {
-            total += v;
-            if total >= ans {
+    let (mut left, mut right) = (0, l);
+    while right - left > 1 {
+        let m = (left + right) / 2;
+        let mut pre = 0;
+        let mut cnt = 0;
+        for v in &a {
+            if v - pre >= m && l - v >= m {
                 cnt += 1;
-                total = 0;
+                pre = *v;
             }
         }
         if cnt < k {
-            ans /= 2;
-        } else if cnt > k {
-            ans = (l - ans) / 2;
+            right = m;
         } else {
-            break;
+            left = m;
         }
     }
-    println!("{}", ans);
+    println!("{}", left);
 }
