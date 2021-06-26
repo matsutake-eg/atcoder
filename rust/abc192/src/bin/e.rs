@@ -35,7 +35,7 @@ fn main() {
         if d > ds[v] {
             continue;
         }
-        for &(nx, t, k) in g[v].iter() {
+        for &(nx, t, k) in &g[v] {
             let d = (d + k - 1) / k * k + t;
             if d < ds[nx] {
                 ds[nx] = d;

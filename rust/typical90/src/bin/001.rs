@@ -13,14 +13,37 @@ use superslice::Ext as _;
 #[fastout]
 fn main() {
     input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1);m],
-        // a:[[usize;m];n],
+        n:usize,
+        l:usize,
+        k:usize,
+        a:[usize;n],
     }
+
+    let mut b = vec![0; n + 1];
+    b[0] = a[0];
+    for i in 1..n {
+        b[i] = a[i] - a[i - 1];
+    }
+    b[n] = l - a[n - 1];
+
+    let mut ans = l / 2;
+    let mut total = 0;
+    let mut cnt = 0;
+    loop {
+        for v in &b {
+            total += v;
+            if total >= ans {
+                cnt += 1;
+                total = 0;
+            }
+        }
+        if cnt < k {
+            ans /= 2;
+        } else if cnt > k {
+            ans = (l - ans) / 2;
+        } else {
+            break;
+        }
+    }
+    println!("{}", ans);
 }
