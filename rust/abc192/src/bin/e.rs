@@ -13,14 +13,39 @@ use superslice::Ext as _;
 #[fastout]
 fn main() {
     input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1);m],
-        // a:[[usize;m];n],
+        n:usize,
+        m:usize,
+        x:Usize1,
+        y:Usize1,
+        abtk: [(Usize1,Usize1,usize,usize);m],
+    }
+
+    let mut g = vec![vec![]; n];
+    for (a, b, t, k) in abtk {
+        g[a].push((b, t, k));
+        g[b].push((a, t, k));
+    }
+
+    const INF: usize = std::usize::MAX;
+    let mut ds = vec![INF; n];
+    ds[x] = 0;
+    let mut pq = BinaryHeap::new();
+    pq.push((Reverse(0), x));
+    while let Some((Reverse(d), v)) = pq.pop() {
+        if d > ds[v] {
+            continue;
+        }
+        for &(nx, t, k) in g[v].iter() {
+            let d = (d + k - 1) / k * k + t;
+            if d < ds[nx] {
+                ds[nx] = d;
+                pq.push((Reverse(ds[nx]), nx));
+            }
+        }
+    }
+    if ds[y] == INF {
+        println!("-1");
+    } else {
+        println!("{}", ds[y]);
     }
 }
