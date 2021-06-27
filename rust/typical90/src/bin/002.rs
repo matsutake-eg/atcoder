@@ -13,14 +13,31 @@ use superslice::Ext as _;
 #[fastout]
 fn main() {
     input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1);m],
-        // a:[[usize;m];n],
+        n:usize,
     }
+
+    dfs("", n);
+}
+
+fn dfs(s: &str, n: usize) {
+    if s.len() == n {
+        let mut cnt = 0i32;
+        for c in s.chars() {
+            if c == '(' {
+                cnt += 1;
+            } else {
+                cnt -= 1;
+            }
+            if cnt < 0 {
+                return;
+            }
+        }
+        if cnt == 0 {
+            println!("{}", s);
+        }
+        return;
+    }
+
+    dfs(&[s, "("].concat(), n);
+    dfs(&[s, ")"].concat(), n);
 }
