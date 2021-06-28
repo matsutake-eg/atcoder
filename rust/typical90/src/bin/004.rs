@@ -13,14 +13,28 @@ use superslice::Ext as _;
 #[fastout]
 fn main() {
     input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1);m],
-        // a:[[usize;m];n],
+        h:usize,
+        w:usize,
+        a:[[usize;w];h],
+    }
+
+    let mut hsum = vec![0; h];
+    let mut wsum = vec![0; w];
+    for i in 0..h {
+        for j in 0..w {
+            hsum[i] += a[i][j];
+            wsum[j] += a[i][j];
+        }
+    }
+
+    for i in 0..h {
+        for j in 0..w {
+            print!("{}", hsum[i] + wsum[j] - a[i][j]);
+            if j == w - 1 {
+                println!("");
+            } else {
+                print!(" ");
+            }
+        }
     }
 }
