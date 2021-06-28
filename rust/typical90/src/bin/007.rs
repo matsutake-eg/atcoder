@@ -13,14 +13,27 @@ use superslice::Ext as _;
 #[fastout]
 fn main() {
     input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1);m],
-        // a:[[usize;m];n],
+        n:usize,
+        a:[i64;n],
+        q:usize,
+        b:[i64;q],
+    }
+
+    let mut a = a;
+    a.sort();
+
+    for v in b {
+        let idx = a.binary_search(&v).unwrap_or_else(|x| x);
+        let mut ans = std::i64::MAX;
+        if idx < n {
+            ans = min(ans, (v - a[idx]).abs());
+        }
+        if idx + 1 < n {
+            ans = min(ans, (v - a[idx + 1]).abs());
+        }
+        if idx >= 1 {
+            ans = min(ans, (v - a[idx - 1]).abs());
+        }
+        println!("{}", ans);
     }
 }
