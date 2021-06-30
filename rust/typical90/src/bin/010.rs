@@ -13,14 +13,25 @@ use superslice::Ext as _;
 #[fastout]
 fn main() {
     input! {
-        // n:usize,
-        // a:i64,
-        // f:f64,
-        // s:String,
-        // t:Chars,
-        // a:[usize;n],
-        // ab: [(usize,usize);n],
-        // ab: [(Usize1, Usize1);m],
-        // a:[[usize;m];n],
+        n:usize,
+        cp: [(usize,usize);n],
+        q:usize,
+        lr: [(usize,usize);q],
+    }
+
+    let mut sum1 = vec![0; n + 1];
+    let mut sum2 = vec![0; n + 1];
+    for (i, (c, p)) in cp.into_iter().enumerate() {
+        sum1[i + 1] = sum1[i];
+        sum2[i + 1] = sum2[i];
+        if c == 1 {
+            sum1[i + 1] += p;
+        } else {
+            sum2[i + 1] += p;
+        }
+    }
+
+    for (l, r) in lr {
+        println!("{} {}", sum1[r] - sum1[l - 1], sum2[r] - sum2[l - 1]);
     }
 }
