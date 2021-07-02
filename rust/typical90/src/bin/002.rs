@@ -16,28 +16,35 @@ fn main() {
         n:usize,
     }
 
-    dfs("", n);
+    let dfs = Dfs { n };
+    dfs.solve("");
 }
 
-fn dfs(s: &str, n: usize) {
-    if s.len() == n {
-        let mut cnt = 0i32;
-        for c in s.chars() {
-            if c == '(' {
-                cnt += 1;
-            } else {
-                cnt -= 1;
-            }
-            if cnt < 0 {
-                return;
-            }
-        }
-        if cnt == 0 {
-            println!("{}", s);
-        }
-        return;
-    }
+struct Dfs {
+    n: usize,
+}
 
-    dfs(&[s, "("].concat(), n);
-    dfs(&[s, ")"].concat(), n);
+impl Dfs {
+    fn solve(&self, s: &str) {
+        if s.len() == self.n {
+            let mut cnt = 0i32;
+            for c in s.chars() {
+                if c == '(' {
+                    cnt += 1;
+                } else {
+                    cnt -= 1;
+                }
+                if cnt < 0 {
+                    return;
+                }
+            }
+            if cnt == 0 {
+                println!("{}", s);
+            }
+            return;
+        }
+
+        self.solve(&[s, "("].concat());
+        self.solve(&[s, ")"].concat());
+    }
 }
